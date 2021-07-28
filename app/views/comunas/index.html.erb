@@ -1,0 +1,42 @@
+<%= render 'users/shared/up'%>
+
+<section class="hero is-fullheight is-link">
+  <div class="hero">
+
+<h1 class="title is-1">COMUNAS</h1>
+
+<div class="columns is-multiline">
+    <% @comunas.each do |comuna|%>
+        <% if current_user %>
+        <div class="column is-one-quarter">
+        <div class="card">
+        <div class="card-image">
+        <figure class="image is-240x240">
+        </figure>
+        </div>
+        <div class="card-content">
+      <div class="media">
+        <div class="media-content">
+         <p class="title is-4" style="color: black"><em><%= comuna.nombre %></em></p>
+          </div>
+      </div>
+      <%= link_to 'Ver detalle', comuna_path(comuna.id) %>
+          </div>
+  </div>
+    </div>
+        </tr>
+    <% end %>
+    <% end %>
+<% if current_user %>
+<% else%>
+<p>a No estas conectado, entonces no puedes ver las Comunas</p>
+<% end %>
+</div>
+<% if current_user %>
+<% if current_user.tipo == 'Administrador' %>
+<a href="new.html" class="button is-link">Crear Nueva Comuna </a>
+<% end %>
+<% end %>
+<a href="../welcome/index.html" class="button is-link">Volver al Inicio </a>
+  </div>
+</section>

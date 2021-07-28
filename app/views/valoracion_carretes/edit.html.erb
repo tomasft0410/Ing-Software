@@ -1,0 +1,21 @@
+<%= render 'users/shared/up'%>
+
+<h1> Editar valoracion de <%=@valoracion_carrete.carrete.titulo%></h1>
+
+<p> <%= notice %> </p>
+
+<%= form_with(model: @valoracion_carrete, method: :patch) do |form| %>
+
+    <div class="field">
+        <%=form.label :puntuacion%>
+        <%=form.number_field :puntuacion, {min: 0, max: 10}%>
+    </div>
+
+    <div class="field">
+        <%= form.hidden_field :carrete, value: @valoracion_carrete.carrete.id%>
+    </div>
+
+    <div class="action">
+        <%=form.submit%>
+    </div>
+<% end %>

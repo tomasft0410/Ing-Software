@@ -1,0 +1,2 @@
+module ComentarioCarretesHelper
+end

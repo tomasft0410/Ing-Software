@@ -1,0 +1,141 @@
+<%= render 'users/shared/up'%>
+
+<section class="hero is-fullheight is-link">
+  <div class="hero">
+
+<h1 class="title is-1">MI PERFIL</h1>
+
+<div class="columns is-multiline">
+        <div class="column is-one-quarter">
+        <div class="card">
+        <div class="card-content">
+      <div class="media">
+        <div class="media-content">
+         <p class="title is-2" style="color: black"><em><%= current_user.username %></em></p>
+         <p> Email: </p>
+         <p class="title is-4" style="color: black"><em><%= current_user.email %></em></p>
+         <p> Edad: </p>
+         <p class="title is-4" style="color: black"><em><%= current_user.edad %></em></p>
+         <p> Telefono: </p>
+         <p class="title is-4" style="color: black"><em><%= current_user.telefono %></em></p>
+         <p> Dinero: </p>
+         <p class="title is-4" style="color: black"><em><%= current_user.dinero %></em></p>  
+        <a href='/users/edit_money' class="button is-warning">Agregar Dinero </a>
+         <p> Tipo de Usuario: </p>
+         <p class="title is-4" style="color: black"><em><%= current_user.tipo %></em></p>
+          </div>
+      </div>
+ 
+  </div>
+
+    </div>
+        </tr>
+</div>
+
+<div class="column is-one-quarter">
+        <div class="card">
+        <div class="card-content">
+      <div class="media">
+        <div class="media-content">
+         <p class="title is-2" style="color: black"><em> MIS CARRETES </em></p>
+            <% carretes = Carrete.all %>
+            <% carretes.each do |carrete|%>
+              <% if current_user %>
+                <% if current_user == carrete.user %>
+                  <div class="media">
+                  <div class="media-content">
+                  <p class="title is-4" style="color: black"><em><%= carrete.titulo %></em></p>
+              </div>
+              <%= link_to 'Ver detalle', carrete_seleccionado_path(carrete.id) %>
+                  </div>
+                  <% end %>
+                <% end %>
+              <% end %>
+          </div>
+            </div>
+                </tr>
+    
+</div>
+</div>
+</div>
+<div class="column is-one-quarter">
+        <div class="card">
+        <div class="card-content">
+      <div class="media">
+        <div class="media-content">
+          <p class="title is-2" style="color: black"><em> MIS SERVICIOS </em></p>
+            <% servicios = Servicio.all %>
+            <% servicios.each do |servicio|%>
+              <% if current_user %>
+                <% if current_user == servicio.user %>
+                  <div class="media">
+                  <div class="media-content">
+                  <p class="title is-4" style="color: black"><em><%= servicio.nombre %></em></p>
+                  </div>
+              <%= link_to 'Ver detalle', servicio_seleccionado_path(servicio.id) %>
+                  </div>
+                  <% end %>
+                <% end %>
+              <% end %>
+          </div>
+            </div>
+                </tr>
+    
+</div>
+</div>
+</div>
+
+<div class="column is-one-quarter">
+        <div class="card">
+        <div class="card-content">
+      <div class="media">
+        <div class="media-content">
+          <p class="title is-2" style="color: black"><em> MIS BIDS </em></p>
+            <% oferts = Ofert.all %>
+            <% oferts.each do |ofert|%>
+              <% if current_user %>
+                <% if current_user == ofert.user %>
+                  <div class="media">
+                  <div class="media-content">
+                  <p class="title is-2" style="color: black"><em><%= ofert.carrete.titulo %></em></p>
+                  <p class="title is-4" style="color: black"><em><%= ofert.bid %></em></p>
+                  </div>
+                  </div>
+                  <% end %>
+                <% end %>
+              <% end %>
+          </div>
+            </div>
+                </tr>
+    
+</div>
+</div>
+</div>
+
+<div class="column is-one-quarter">
+        <div class="card">
+        <div class="card-content">
+      <div class="media">
+        <div class="media-content">
+          <p class="title is-2" style="color: black"><em> CARRETES FAVORITOS </em></p>
+            <% favoritos = Favorito.all %>
+            <% favoritos.each do |fav|%>
+              <% if current_user %>
+                <% if current_user == fav.user %>
+                  <div class="media">
+                  <div class="media-content">
+                  <p class="title is-2" style="color: black"><em><%= fav.carrete.titulo %></em></p>
+                  
+                  
+              <%= link_to 'Ver detalle', carrete_seleccionado_path(fav.carrete.id) %>
+                
+                  <% end %>
+                <% end %>
+              <% end %>
+          </div>
+            </div>
+                </tr>
+
+</div>
+</div>
+</div>

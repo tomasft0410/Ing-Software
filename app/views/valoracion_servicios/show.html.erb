@@ -1,0 +1,30 @@
+<%= render 'users/shared/up'%>
+
+<p id='notice'><%= notice %></p>
+<div class="columns is-multiline">
+        <div class="column is-one-quarter">
+        <div class="card">
+        <div class="card-image">
+        </div>
+        <div class="card-content">
+      <div class="media">
+        <div class="media-content">
+         <p class="title is-2" style="color: black"><em><%= @valoracion_servicio.servicio.nombre %></em></p>
+         <p> Puntuacion: </p>
+         <p class="title is-4" style="color: black"><em><%= @valoracion_servicio.puntuacion %></em></p>
+          </div>
+      </div>
+          </div>
+  </div>
+    </div>
+        </tr>
+</div>
+  </div>
+</section>
+
+
+<%= link_to "Volver al listado", valoracion_servicios_id_path(@valoracion_servicio.servicio.id) %>
+<% if current_user == @valoracion_servicio.user or current_user.tipo == 'Administrador'%>
+<%= link_to "Eliminar valoracion", valoracion_servicio_path, method: :delete %>
+<%= link_to "Editar valoracion", valoracion_servicio_edit_path %>
+<% end %>

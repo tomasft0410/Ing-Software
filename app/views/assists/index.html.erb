@@ -1,0 +1,59 @@
+<%= render 'users/shared/up'%>
+
+<section class="hero is-fullheight is-link">
+  <div class="hero">
+
+<h1 class="title is-1"><%= @carrete.titulo %></h1>
+<h1 class="title is-3">Lista Asistentes</h1>
+
+
+<div class="columns is-multiline">
+    <% @assists.each do |assist|%>
+        <%if @carrete.id == assist.carrete.id%>
+            <% if @carrete.estado_busqueda == 'Abierto'%>
+                <% if current_user.id == assist.carrete.user_id or current_user.tipo == 'Administrador'%>
+                    <div class="column is-one-quarter">
+                    <div class="card">
+                    <div class="card-image">
+                    <figure class="image is-240x240">
+                    </figure>
+                    </div>
+                    <div class="card-content">
+                <div class="media">
+                    <div class="media-content">
+                    <p class="title is-4" style="color: black"><em><%= assist.user.username %></em></p>
+                    <div>
+                        </div>
+                </div>
+            </div>
+                </div>
+        </div>
+            </div>
+                </tr>
+                <%end%>
+            <% else %>
+                <% if current_user%>
+                    <div class="column is-one-quarter">
+                        <div class="card">
+                        <div class="card-image">
+                        <figure class="image is-240x240">
+                        </figure>
+                        </div>
+                        <div class="card-content">
+                    <div class="media">
+                        <div class="media-content">
+                        <p class="title is-4" style="color: black"><em><%= assist.user.username %></em></p>
+                        <div>
+                            </div>
+                    </div>
+                </div>
+                    </div>
+            </div>
+                </div>
+                    </tr>
+                    <%end%>
+        <%end%>
+    <%end%>
+    <%end%>
+          </div>
+          <%= link_to 'Volver al Carrete', carrete_seleccionado_path(@carrete.id), {:style=>'color: white;', :class => "button is-link"} %>

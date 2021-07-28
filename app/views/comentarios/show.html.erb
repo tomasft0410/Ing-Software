@@ -1,0 +1,30 @@
+<%= render 'users/shared/up'%>
+
+<p id='notice'><%= notice %></p>
+<div class="columns is-multiline">
+        <div class="column is-one-quarter">
+        <div class="card">
+        <div class="card-image">
+        </div>
+        <div class="card-content">
+      <div class="media">
+        <div class="media-content">
+         <p class="title is-2" style="color: black"><em><%= @comentario.servicio.nombre %></em></p>
+         <p> Contenido: </p>
+         <p class="title is-4" style="color: black"><em><%= @comentario.contenido %></em></p>
+         <p> Fecha: </p>
+         <p class="title is-4" style="color: black"><em><%= @comentario.created_at %></em></p>
+         </div>
+      </div>
+          </div>
+  </div>
+    </div>
+        </tr>
+</div>
+  </div>
+</section>
+
+<%= link_to "Volver al listado", comentarios_id_path(@comentario.servicio.id) %>
+<% if current_user == @comentario.user or current_user.tipo == 'Administrador' %>
+<%= link_to "Eliminar comentario", comentario_path, method: :delete %>
+<% end %>

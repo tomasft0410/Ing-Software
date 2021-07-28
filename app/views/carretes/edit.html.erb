@@ -1,0 +1,59 @@
+
+<%= render 'users/shared/up'%>
+
+<p> <%= notice %> </p>
+<br><br>
+<div class="columns is-mobile is-centered">
+        <div class="col-is-one-thrid">
+        <div class="card" style="background-color:white">
+        <div class="card-content">
+      <div class="media">
+        <div class="media-content">
+     <div class="card-title"><h1 class="title is-2" style="color: black">Editar Carrete</h1></div>
+    <div class="card-body">
+    <br>
+
+<%= form_with(model: @carrete, method: :patch, url: carrete_update_path(@carrete.id)) do |form| %>
+
+  <div class="field">
+      <%=form.label :titulo, style: "color:black"%>
+      <%=form.text_field :titulo%>
+  </div>
+  <div class="field">
+      <%=form.label :direccion, style: "color:black"%>
+      <%=form.text_field :direccion%>
+  </div>
+  <div class="field">
+      <%=form.label :costo_total, style: "color:black"%>
+      <%=form.number_field :costo_total%>
+  </div>
+  <div class="field">
+      <%=form.label :imagen, style: "color:black"%>
+      <%=form.text_field :imagen%>
+  </div>
+  <div class="field">
+      <%=form.label :descripcion, style: "color:black"%>
+      <%=form.text_field :descripcion%>
+  </div>
+  <div class="field">
+      <%=form.label :max_asistentes, style: "color:black"%>
+      <%=form.number_field :max_asistentes%>
+  </div>
+  <div class="field">
+      <%=form.label :Comuna, style: "color:black"%>
+      <%= form.collection_select :comuna, Comuna.all, :id, :nombre %>
+  </div>
+  <div class="action">
+      <%=form.submit%>
+  </div>
+</div>
+  </div>
+  </div>
+  </div>
+  </div>
+
+<% end %>
+
+  <%= link_to "Volver al listado de Carretes", carretes_index_path, {:style=>'color: white;', :class => "button is-link"} %>
+</div>
+</div>

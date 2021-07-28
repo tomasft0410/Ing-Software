@@ -1,0 +1,26 @@
+<%= render 'users/shared/up'%>
+
+<h1>Nueva área de operación de servicio</h1>
+
+<p> <%= notice %> </p>
+
+<%= form_with(model: @operate, method: :post) do |form| %>
+
+    <div class="field">
+        <%=form.label :servicio%>
+        <%= form.collection_select :id_servicio, Servicio.all, :id, :nombre %>
+    </div>
+
+    <div class="field">
+        <%=form.label :comuna%>
+        <%= form.collection_select :id_lugar, Comuna.all, :id, :nombre %>
+    </div>
+
+    <div class="action">
+        <%=form.submit%>
+    </div>
+<% end %>
+
+<p>
+  <%= link_to "Volver al listado de Valoracion de Carretes", valoracion_carretes_index_path %>
+</p>

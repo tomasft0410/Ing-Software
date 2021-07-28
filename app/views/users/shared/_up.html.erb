@@ -1,0 +1,45 @@
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="/welcome/index">
+      <img src="https://images-na.ssl-images-amazon.com/images/I/51l-H6cEMhL.png" width="90" height="80">
+    </a>
+
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="/welcome/index">
+        Home
+      </a>
+      <a class="navbar-item" href="/carretes/index">
+          Carretes
+      </a>
+      <a class="navbar-item" href="/servicios/index">
+          Servicios
+      </a>
+      <a class="navbar-item" href="/comunas/index">
+          Comunas
+      </a>
+      </div>
+    <h1 align="center" class="title is-1">FIND MY FARRA</h1>
+    <div class="navbar-end">
+      <div class="navbar-item">
+      <div class="navbar-item">
+      </div>
+      </div>
+    </div>
+    <div class="buttons">
+    <%if signed_in? %>
+      <a href='/users/show' class="button is-warning">Mi Perfil </a>
+      <a href="/users/sign_out" class="button is-danger">Log Out </a>
+    <% else %>
+      <a href="/users/sign_in" class="button is-link">Log In </a>
+      <a href="/users/sign_up" class="button is-primary">Sign Up </a>
+    <% end %>
+    </div>
+</nav>

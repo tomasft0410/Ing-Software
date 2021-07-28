@@ -1,0 +1,97 @@
+<%= render 'users/shared/up'%>
+
+<section class="hero is-fullheight is-link">
+  <div class="hero">
+
+<p> <%= notice %> </p>
+
+<h1 class="title is-1">TODOS LOS SERVICIOS</h1>
+
+    <div class="columns is-multiline">
+        <% @servicios.each do |servicio|%>
+          <% if current_user %>
+            <% if (current_user.tipo == 'Cliente' and servicio.status == 'Aceptado')%>
+            <div class="column is-one-quarter">
+            <div class="card">
+            <div class="card-image">
+            <figure class="image is-240x240">
+            <img src="<%= servicio.imagen %>" alt="Placeholder image">
+            </figure>
+            </div>
+            <div class="card-content">
+          <div class="media">
+            <div class="media-content">
+             <p class="title is-4" style="color: black"><em><%= servicio.nombre %></em></p>
+              </div>
+          </div>
+          <%= link_to 'Ver detalle', servicio_seleccionado_path(servicio.id) %>
+              </div>
+      </div>
+        </div>
+            </tr>
+          <% elsif current_user.tipo == 'Administrador'%>
+            <div class="column is-one-quarter">
+              <div class="card">
+              <div class="card-image">
+              <figure class="image is-240x240">
+              <img src="<%= servicio.imagen %>" alt="Placeholder image">
+              </figure>
+              </div>
+              <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+              <p class="title is-4" style="color: black"><em><%= servicio.nombre %></em></p>
+                </div>
+            </div>
+            <%= link_to 'Ver detalle', servicio_seleccionado_path(servicio.id) %>
+                </div>
+        </div>
+          </div>
+              </tr>
+
+            <% end %>
+        <% end %>
+<% end %>
+<% if current_user %>
+<% else%>
+<p>a No estas conectado, entonces no puedes ver los Servicios </p>
+<% end %>
+
+
+</div>
+<% if current_user %>
+<h1 class="title is-1">MIS SERVICIOS</h1>
+    <div class="columns is-multiline">
+        <% @servicios.each do |servicio|%>
+          <% if current_user %>
+            <% if current_user == servicio.user %>
+            <div class="column is-one-quarter">
+            <div class="card">
+            <div class="card-image">
+            <figure class="image is-240x240">
+            <img src="<%= servicio.imagen %>" alt="Placeholder image">
+            </figure>
+            </div>
+            <div class="card-content">
+          <div class="media">
+            <div class="media-content">
+             <p class="title is-4" style="color: black"><em><%= servicio.nombre %></em></p>
+              </div>
+          </div>
+          <%= link_to 'Ver detalle', servicio_seleccionado_path(servicio.id) %>
+              </div>
+      </div>
+        </div>
+            </tr>
+            <% end %>
+        <% end %>
+<% end %>
+</div>
+<% end %>
+
+<% if current_user %>
+<a href="new.html" class="button is-link">Crear Nuevo Servicio </a>
+<% end %>
+<a href="../welcome/index.html" class="button is-link">Volver al Inicio </a>
+  </div>
+</section>

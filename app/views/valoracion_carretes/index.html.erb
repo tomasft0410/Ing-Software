@@ -1,0 +1,79 @@
+<%= render 'users/shared/up'%>
+
+<section class="hero is-fullheight is-link">
+  <div class="hero">
+
+<p> <%= notice %> </p>
+
+<h1 class="title is-1">Valoraciones de <%= @carrete.titulo %></h1>
+<% voto = false %>
+<h1 class="title is-3">Mi Valoracion</h1>
+
+<div class="columns is-multiline">
+    <% voto = false %>
+    <% @valoracion_carretes.each do |valoracion_carrete|%>
+        <% if current_user %>
+        <% if valoracion_carrete.carrete.id == @carrete.id %>
+        <% if current_user == valoracion_carrete.user%>
+        <% voto = true %>
+        <div class="column is-one-quarter">
+        <div class="card">
+        <div class="card-content">
+          <div class="media-content">
+            <p> Puntuacion: </p>
+            <meter style="width: 75%" min="0" max="10" low="3" high="7" optimum="10" value= <%= valoracion_carrete.puntuacion %>>
+        </div>
+      <%= link_to "Eliminar valoracion", valoracion_carrete_path(valoracion_carrete.id), method: :delete %>
+          </div>
+  </div>
+    </div>
+        </tr>
+    <% end %>
+    <% end %>
+    <% end %>
+    <% end %>
+<% if current_user %>
+<% else%>
+<p>a No estas conectado, entonces no puedes ver los Carretes </p>
+<% end %>
+</div>
+
+<% if voto == false %>
+<p class="title is-6" style="color: white"><em>Crea una valoración a este carrete </em></p>
+<%= form_with(model: @valoracion_carrete, method: :post, url: valoracion_carretes_path) do |form| %>
+
+    <div class="field">
+        <%=form.label :puntuacion%>
+        <%=form.number_field :puntuacion, {min: 0, max: 10}%>
+    </div>
+    <div class="field">
+        <%= form.hidden_field :carrete, value: @carrete.id%>
+    <div class="action">
+        <%=form.submit%>
+    </div>
+    </div>
+<% end %>
+<% end %>
+
+<h1 class="title is-3">Todas las Valoraciones</h1>
+
+<div class="columns is-multiline">
+    <div class="column is-one-quarter">
+    <div class="card">
+    <div class="card-content">
+      <div class="media-content">
+        <p> Puntuacion: </p>
+        <meter style="width: 75%" min="0" max="10" low="3" high="7" optimum="10" value= <%= @promedio_puntaje %>>
+    </div>
+    <p class="title is-7" style="color: black"><em>Han valorado <%= @valoraciones_total%> personas este servicio </em></p>
+      </div>
+</div>
+</div>
+    </tr>
+</div>
+
+<% if current_user %>
+<% end %>
+<%= link_to 'Volver al Carrete', carrete_seleccionado_path(@carrete.id), {:style=>'color: white;', :class => "button is-link"} %>
+  </div>
+</section>

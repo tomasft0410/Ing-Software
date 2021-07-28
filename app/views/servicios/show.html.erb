@@ -1,0 +1,105 @@
+<%= render 'users/shared/up'%>
+
+<p id='notice'><%= notice %></p>
+
+<h1 class="title is-1" style="color: white"><%= @servicio.nombre%></h1>
+
+<div class="columns is-multiline">
+        <div class="column is-one-quarter">
+        <div class="card">
+        <div class="card-image">
+        <figure class="image is-240x240">
+        <img src="<%= @servicio.imagen %>" alt="Placeholder image">
+        </figure>
+        </div>
+        <div class="card-content">
+      <div class="media">
+        <div class="media-content">
+         <p class="title is-2" style="color: black"><em><%= @servicio.nombre %></em></p>
+         <p> Descripcion del Servicio: </p>
+         <p class="title is-4" style="color: black"><em><%= @servicio.descripcion %></em></p>
+         <p> Precio del Servicio: </p>
+         <p class="title is-4" style="color: black"><em><%= @servicio.precio %></em></p>
+         <p> Maxima cantidad de personas: </p>
+         <p class="title is-4" style="color: black"><em><%= @servicio.max_capacidad %></em></p>
+         <p> Estado de Servicio: </p>
+         <p class="title is-4" style="color: black"><em><%= @servicio.status %></em></p>
+         <% if @servicio.status == "Aceptado"%>
+          <%= link_to "Contratar", contrato_new_path(@servicio), {:style=>'color: white;', :class => "button is-link"} %>
+          </br>
+         <% else %>
+          <% if current_user.tipo == "Administrador"%>
+          <%= link_to "Accept", servicio_admin_path(@servicio), {:style=>'color: white;', :class => "button is-success", method: :patch }%>
+          <%= link_to "Decline", servicio_admin_path(@servicio), {:style=>'color: white;', :class => "button is-danger", method: :delete }%>
+          </br>
+          <%end%>
+          <%end%>
+
+         </br>
+         <p>
+         <%= link_to 'Comentarios', comentarios_id_path(@servicio.id), {:style=>'color: white;', :class => "button is-link"} %>
+          </div>
+      </div>
+          </div>
+  </div>
+    </div>
+
+    <div class="column is-one-quarter">
+         <div class="card">
+        <% voto = false %>
+        <% @valoracion_servicios.each do |valoracion_servicio|%>
+            <% if current_user %>
+            <% if valoracion_servicio.servicio.id == @servicio.id %>
+            <% if current_user == valoracion_servicio.user%>
+            <% voto = true %>
+            <div class="card-content">
+              <div class="media-content">
+              <p class="title is-2" style="color: black"><em>Valoraciones: </em></p>
+                <p> Mi Valoración: </p>
+                <meter style="width: 75%" min="0" max="10" low="3" high="7" optimum="10" value= <%= valoracion_servicio.puntuacion %>>
+            </div>
+          <%= link_to "Eliminar valoracion", valoracion_servicio_path(valoracion_servicio.id), method: :delete %>
+              </div>
+            </tr>
+        <% end %>
+        <% end %>
+        <% end %>
+        <% end %>
+
+    <% if voto == false %>
+            <div class="card-content">
+          <div class="media-content">
+    <p class="title is-2" style="color: black"><em>Valoraciones: </em></p>
+    <p class="title is-6" style="color: black"><em>Crea una valoración a este servicio </em></p>
+    <%= form_with(model: @valoracion_servicio, method: :post, url: valoracion_servicios_path) do |form| %>
+
+        <div class="field">
+            <%=form.label :puntuacion%>
+            <%=form.number_field :puntuacion, {min: 0, max: 10}%>
+        </div>
+        <div class="field">
+            <%= form.hidden_field :servicio, value: @servicio.id%>
+        <div class="action">
+            <%=form.submit%>
+        </div>
+        </div>
+                </div>
+        </div>
+    <% end %>
+    <% end %>
+        <div class="card-content">
+          <div class="media-content">
+            <p> Todas las Valoraciones: </p>
+            <meter style="width: 75%" min="0" max="10" low="3" high="7" optimum="10" value= <%= @promedio_puntaje %>>
+        </div>
+        <p class="title is-7" style="color: black"><em>Han valorado <%= @valoraciones_total%> personas este servicio </em></p>
+          </div>
+    </div>
+        </tr>
+
+
+<% if current_user.tipo == 'Administrador' or current_user == @servicio.user %>
+<%= link_to "Editar servicio", servicio_edit_path, {:style=>'color: white;', :class => "button is-success"} %>
+<%= link_to "Eliminar servicio", servicio_seleccionado_path,{:style=>'color: white;', :class => "button is-danger", method: :delete }%>
+<% end %>
+<%= link_to "Volver al listado de Servicios", servicios_index_path, {:style=>'color: white;', :class => "button is-link"} %>

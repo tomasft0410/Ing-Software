@@ -1,0 +1,24 @@
+<%= render 'users/shared/up'%>
+
+<h1>Nueva Valoracion para <%=@servicio.nombre%></h1>
+
+<p> <%= notice %> </p>
+
+<%= form_with(model: @valoracion_servicio, method: :post) do |form| %>
+
+    <div class="field">
+        <%=form.label :puntuacion%>
+        <%=form.number_field :puntuacion, {min: 0, max: 10}%>
+    </div>
+
+    <div class="field">
+        <%= form.hidden_field :servicio, value: @servicio.id%>
+    </div>
+    <div class="action">
+        <%=form.submit%>
+    </div>
+<% end %>
+
+<p>
+  <%= link_to "Volver al listado de Valoracion de Servicios", valoracion_servicios_id_path(@servicio.id) %>
+</p>

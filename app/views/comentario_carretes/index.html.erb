@@ -1,0 +1,59 @@
+<%= render 'users/shared/up'%>
+
+<section class="hero is-fullheight is-link">
+  <div class="hero">
+
+<p> <%= notice %> </p>
+
+<h1 class="title is-1">Comentarios de <%= @carrete.titulo %></h1>
+
+<div class="columns is-multiline">
+    <div class="column is-two-quarter">
+    <div class="card">
+    <div class="card-content">
+    <div class="media">
+    <div class="media-content">
+    <% @comentario_carretes.each do |comentario|%>
+    <div>
+        <% if comentario.carrete.id == @carrete.id %>
+        <% if current_user %>
+        <div class="media">
+        <div class="media-content">
+        <a class="title is-5" style="color: red"><%= comentario.user.username %>:</a>
+        <a class="title is-5" style="color: black"><%= comentario.contenido %></a><br>
+        <a class="title is-7" style="color: black"><%= comentario.created_at %></a>
+        </div>
+        <% if current_user == comentario.user or current_user.tipo == 'Administrador' %>
+        <%= link_to "Eliminar comentario", comentario_carrete_path(comentario.id), method: :delete %>
+        <%end%>
+        </div>
+      <% end %>
+      <% end %>
+  </div>
+  <% end %>
+  <%= form_with(model: @comentario_carrete, method: :post, url: comentario_carretes_path) do |form| %>
+
+      <div class="field">
+          <%= form.hidden_field :id_carrete, value: @carrete.id%>
+      </div>
+      <div class="field">
+          <%=form.text_field :contenido, :size=>"195" %>
+      <div class='action'>
+          <%=form.submit%>
+      </div>
+      </div>
+  <% end %>
+</div>
+</div>
+      </div>
+</div>
+</div>
+    </tr>
+<% if current_user %>
+<% else%>
+<p>a No estas conectado, entonces no puedes ver los Comentarios </p>
+<% end %>
+</div>
+<%= link_to 'Volver al Carrete', carrete_seleccionado_path(@carrete.id), {:style=>'color: white;', :class => "button is-link"} %>
+  </div>
+</section>

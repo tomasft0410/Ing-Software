@@ -1,0 +1,29 @@
+<%= render 'users/shared/up'%>
+
+<p id='notice'><%= notice %></p>
+
+<h1 class="title is-1" style="color: white">Carretes en <%= @comuna.nombre %></h1>
+
+<div class="columns is-multiline">
+        <div class="col-is-one-third">
+        <div class="card">
+        <div class="card-content">
+      <div class="media">
+        <div class="media-content">
+        <% @carretes = Carrete.all %>
+        <% @carretes.each do |carrete| %>
+        <% if carrete.comuna == @comuna%>
+         <p class="title is-2" style="color: black"><em><%= carrete.titulo %></em></p>
+         <%= link_to 'Ver detalle', carrete_seleccionado_path(carrete.id) %>
+         <div class="media">
+                  <div class="media-content">
+         <% end %>
+          <% end %>
+    </div>
+</div>
+
+</div>
+
+</div>
+<%= link_to "Volver al listado de Comunas", comunas_index_path, {:style=>'color: white;', :class => "button is-link"} %>
+</div>

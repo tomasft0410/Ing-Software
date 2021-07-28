@@ -1,0 +1,35 @@
+<%= render 'users/shared/up'%>
+
+<p id='notice'><%= notice %></p>
+<div class="columns is-multiline">
+        <div class="column is-one-quarter">
+        <div class="card">
+        <div class="card-image">
+        </div>
+        <div class="card-content">
+      <div class="media">
+        <div class="media-content">
+         <p class="title is-4" style="color: black"><em><%= ofert.bid %></em></p>
+         <p class="title is-2" style="color: black"><em><%= ofert.user.username %></em></p>
+         <div>
+         <%= link_to "Accept", assists_new_path(ofert), method: :post %>
+         <%= link_to "Decline", assists_new_path(ofert), method: :delete %>   
+         </div>
+          </div>
+      </div>
+          </div>
+  </div>
+    </div>
+        </tr>
+</div>
+  </div>
+</section>
+
+<%= link_to "Volver a Mi Perfil", '/users/show' %>
+<% if current_user.tipo == 'Administrador' %>
+<%= link_to "Eliminar BID", ofert_seleccionado_path, method: :delete %>
+<% end %>
+<% if current_user == @ofert.user %>
+<%= link_to "Editar BID ", ofert_edit_path %>
+<%= link_to "Eliminar BID", ofert_seleccionado_path, method: :delete %>
+<% end %>

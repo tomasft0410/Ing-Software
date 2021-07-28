@@ -1,0 +1,38 @@
+<%= render 'users/shared/up'%>
+
+<section class="hero is-fullheight is-link">
+  <div class="hero">
+
+<h1 class="title is-1">BIDS DE OTRAS PERSONAS</h1>
+<h1 class="title is-1"> OFERTAS PARA EL CARRETE <%= @carrete.titulo %></h1>
+
+<div class="columns is-multiline">
+    <% @oferts.each do |ofert|%>
+      <% if ofert.carrete == @carrete%>
+        <div class="column is-one-quarter">
+        <div class="card">
+        <div class="card-image">
+        <figure class="image is-240x240">
+        </figure>
+        </div>
+        <div class="card-content">
+      <div class="media">
+        <div class="media-content">
+         <p class="title is-4" style="color: black"><em><%= ofert.bid %></em></p>
+         <p class="title is-2" style="color: black"><em><%= ofert.user.username %></em></p>
+         <div>
+         <%= link_to "Accept", assists_new_path(ofert), {:style=>'color: white;', :class => "button is-success",  method: :post }%>
+         <%= link_to "Decline", assists_new_path(ofert), {:style=>'color: white;', :class => "button is-danger", method: :delete }%>   
+         </div>
+          </div>
+      </div>
+          </div>
+  </div>
+    </div>
+    </div>
+        <% end %>
+    <% end %>
+
+<%= link_to 'Volver al Carrete', carrete_seleccionado_path(@carrete.id), {:style=>'color: white;', :class => "button is-link"} %>
+<a href="../../carretes/index" class="button is-link">Volver al listado de Carretes </a>
+</div>

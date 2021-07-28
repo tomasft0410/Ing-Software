@@ -1,0 +1,163 @@
+<%= render 'users/shared/up'%>
+
+<p id='notice'><%= notice %></p>
+
+<h1 class="title is-1" style="color: white"><%= @carrete.titulo%></h1>
+
+<div class="columns is-multiline">
+        <div class="column is-one-quarter">
+        <div class="card">
+        <div class="card-image">
+        <figure class="image is-240x240">
+        <img src="<%= @carrete.imagen %>" alt="Placeholder image">
+        </figure>
+        </div>
+        <div class="card-content">
+      <div class="media">
+        <div class="media-content">
+         <p class="title is-2" style="color: black"><em><%= @carrete.titulo %></em></p>
+         <p> Fecha: </p>
+          <p class="title is-4" style="color: black"><em><%= @carrete.fecha%></em></p>
+         <p> Descripcion del Evento: </p>
+         <p class="title is-4" style="color: black"><em><%= @carrete.descripcion %></em></p>
+         <p> Direccion: </p>
+         <p class="title is-4" style="color: black"><em><%= @carrete.direccion %></em></p>
+         <p> Maxima cantidad de personas: </p>
+         <p class="title is-4" style="color: black"><em><%= @carrete.max_asistentes %></em></p>
+         <p> Estado de Busqueda: </p>
+         <p class="title is-4" style="color: black"><em><%= @carrete.estado_busqueda %></em></p>
+         <p> Comuna: </p>
+         <p class="title is-4" style="color: black"><em><%= @carrete.comuna.nombre %></em></p>
+         <% if current_user == @carrete.user or current_user.tipo == 'Administrador' %>
+         <%   if @carrete.estado_busqueda == "Abierto"%>
+              <%= link_to 'VER BIDS DE OTRAS PERSONAS', carrete_id_path(@carrete.id), {:style=>'color: white;', :class => "button is-link"} %>
+              </br>
+              </br>
+              <%if current_user == @carrete.user%>
+                <%= link_to 'Contratar Servicios', servicios_index_path, {:style=>'color: white;', :class => "button is-link"} %>
+                </br>
+                </br>
+              <%end%>
+              <%end%>
+
+
+
+         <% else %>
+              <% if @carrete.estado_busqueda == "Abierto"%>
+                <%= link_to 'BID', ofert_new_path(@carrete.id), {:style=>'color: white;', :class => "button is-link"} %>
+                </br>
+                </br>
+              <%end%>
+         <% end %>
+         <%= link_to 'VER LISTA DE ASISTENTES', assists_index_path(@carrete.id), {:style=>'color: white;', :class => "button is-link"} %>
+         </br>
+         </br>
+         <p>
+         <%= link_to 'Comentarios', comentario_carretes_id_path(@carrete.id), {:style=>'color: white;', :class => "button is-link"} %> </p>
+         </br>
+        <% agregado = false %>
+        <% @favoritos = Favorito.all %>
+        <% @favoritos.each do |fav| %>
+            <% if @carrete == fav.carrete %>
+                <% agregado = true %>
+                <%= link_to 'Eliminar Carrete de favoritos', favorito_new_path(fav), {:style=>'color: white;', :class => "button is-link", method: :delete} %>
+                </br>
+                </br>
+            <% end %>
+        <% end %>
+        <% if agregado == false %>
+            <%= link_to 'Agregar a favoritos', favorito_new_path(@carrete), {:style=>'color: white;', :class => "button is-link", method: :post } %>
+            </br>
+            </br>
+        <% end %>
+    </div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<div class="column is-one-quarter">
+     <div class="card">
+     <div class="card-content">
+    <div class="media">
+     <div class="media-content">
+        <p class="title is-2" style="color: black"><em>Servicios Contratados: </em></p>
+        <% @contratos = Contrato.all%>
+        <% @contratos.each do |contrato|%>
+        <% if contrato.carrete == @carrete %>
+        <p class="title is-4" style="color: black"><em><%= contrato.servicio.nombre%></em>
+        <%= link_to 'Ver detalle', servicio_seleccionado_path(contrato.servicio.id) %></p>
+        <% end %>
+        <% end %>
+    </div>
+</div>
+</div>
+    <% voto = false %>
+    <% @valoracion_carretes.each do |valoracion_carrete|%>
+        <% if current_user %>
+        <% if valoracion_carrete.carrete.id == @carrete.id %>
+        <% if current_user == valoracion_carrete.user%>
+        <% voto = true %>
+        <div class="card-content">
+          <div class="media-content">
+          <p class="title is-2" style="color: black"><em>Valoraciones: </em></p>
+            <p> Mi Valoración: </p>
+            <meter style="width: 75%" min="0" max="10" low="3" high="7" optimum="10" value= <%= valoracion_carrete.puntuacion %>>
+        </div>
+      <%= link_to "Eliminar valoracion", valoracion_carrete_path(valoracion_carrete.id), method: :delete %>
+          </div>
+        </tr>
+    <% end %>
+    <% end %>
+    <% end %>
+    <% end %>
+
+<% if voto == false %>
+        <div class="card-content">
+          <div class="media-content">
+<p class="title is-2" style="color: black"><em>Valoraciones: </em></p>
+<p class="title is-6" style="color: black"><em>Crea una valoración a este carrete </em></p>
+<%= form_with(model: @valoracion_carrete, method: :post, url: valoracion_carretes_path) do |form| %>
+
+    <div class="field">
+        <%=form.label :puntuacion%>
+        <%=form.number_field :puntuacion, {min: 0, max: 10}%>
+    </div>
+    <div class="field">
+        <%= form.hidden_field :carrete, value: @carrete.id%>
+    <div class="action">
+        <%=form.submit%>
+    </div>
+    </div>
+        </div>
+    </div>
+<% end %>
+<% end %>
+    <div class="card-content">
+      <div class="media-content">
+        <p> Promedio de Todas las Valoraciones: </p>
+        <meter style="width: 75%" min="0" max="10" low="3" high="7" optimum="10" value= <%= @promedio_puntaje %>>
+    </div>
+    <p class="title is-7" style="color: black"><em>Han valorado <%= @valoraciones_total%> personas este servicio </em></p>
+      </div>
+</div>
+    </tr>
+
+
+</br>
+  <% if current_user.tipo == 'Administrador' %>
+  <% if current_user != @carrete.user %>
+  <%= link_to "Eliminar carrete", carrete_seleccionado_path, {:style=>'color: white;', :class => "button is-danger", method: :delete} %>
+  </br>
+  <% end %>
+  <% end %>
+  <% if current_user == @carrete.user %>
+  <%= link_to "Eliminar carrete", carrete_seleccionado_path, {:style=>'color: white;', :class => "button is-danger", method: :delete} %>
+  <%= link_to "Editar carrete", carrete_edit_path, {:style=>'color: white;', :class => "button is-success"} %>
+  <% end %>
+    <%= link_to "Volver al listado de Carretes", carretes_index_path, {:style=>'color: white;', :class => "button is-link"} %>
+  </br>
+   </tr>
+</div>

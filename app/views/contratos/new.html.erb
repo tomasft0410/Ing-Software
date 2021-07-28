@@ -1,0 +1,45 @@
+<%= render 'users/shared/up'%>
+
+<br><br>
+<div class="columns is-mobile is-centered">
+        <div class="col-is-one-thrid">
+        <div class="card" style="background-color:white">
+        <div class="card-content">
+      <div class="media">
+        <div class="media-content">
+     <div class="card-title"><h1 class="title is-2" style="color: black"> Nueva Contrato para <%= @servicio.nombre %></h1></div>
+    <div class="card-body">
+    <br>
+<p> <%= notice %> </p>
+
+<%= form_with(model: @contrato, method: :post) do |form| %>
+
+
+    <div class="field">
+        <%= form.label :carrete,  style: "color:black"%>
+        <% carretes_user = [] %>
+        <% carretes = Carrete.all %>
+        <% carretes.each do |carrete|%>
+            <% if carrete.user == current_user %>
+              <% carretes_user.push(carrete)%>
+            <% end %>
+        <% end %>
+        <%= form.collection_select :id_carrete, carretes_user, :id, :titulo %>
+    </div>
+
+   <div class="field">
+        <%= form.hidden_field :servicio, value: @servicio.id%>
+    </div>
+
+    <div class="action">
+        <%=form.submit%>
+    </div>
+
+<% end %>
+</div>
+  </div>
+  </div>
+  </div>
+  </div>
+<%= link_to 'Volver al Servicio', servicio_seleccionado_path(@servicio.id), {:style=>'color: white;', :class => "button is-link"} %>
+</div>

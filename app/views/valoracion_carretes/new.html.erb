@@ -1,0 +1,25 @@
+<%= render 'users/shared/up'%>
+
+<h1>Nueva Valoracion para <%=@carrete.titulo%></h1>
+
+<p> <%= notice %> </p>
+
+<%= form_with(model: @valoracion_carrete, method: :post) do |form| %>
+
+    <div class="field">
+        <%=form.label :puntuacion%>
+        <%=form.number_field :puntuacion, {min: 0, max: 10}%>
+    </div>
+
+    <div class="field">
+        <%= form.hidden_field :carrete, value: @carrete.id%>
+    </div>
+
+    <div class="action">
+        <%=form.submit%>
+    </div>
+<% end %>
+
+<p>
+  <%= link_to "Volver al listado de Valoracion de Carretes", valoracion_carretes_id_path(@carrete.id) %>
+</p>

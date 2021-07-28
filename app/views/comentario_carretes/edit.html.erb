@@ -1,0 +1,27 @@
+<%= render 'users/shared/up'%>
+
+<h1> Editar comentario de <%=@comentario_carrete.carrete.titulo%> </h1>
+
+<p> <%= notice %> </p>
+
+<%= form_with(model: @comentario_carrete, method: :patch, url: comentario_carrete_update_path(@comentario_carrete.id)) do |form| %>
+
+    <div class="field">
+        <%= form.hidden_field :id_carrete, value: @comentario_carrete.carrete.id%>
+    </div>
+
+    <div class='field'>
+        <%=form.label :contenido%>
+        <%=form.text_field :contenido%>
+    </div>
+
+    <div class="field">
+        <%= form.hidden_field :fecha_hora, value: @comentario_carrete.updated_at%>
+    </div>
+
+    <div class='action'>
+        <%=form.submit%>
+    </div>
+
+
+<% end %>
